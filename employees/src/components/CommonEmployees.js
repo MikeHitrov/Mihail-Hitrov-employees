@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 
 export default function GetCommonEmployees({data}){
-    const [common, setCommon] = useState({});
+    const [common, setCommon] = useState();
 
     const extractEmployees = data => {
         setCommon(data.filter(u => u.projectId))
@@ -21,17 +21,18 @@ export default function GetCommonEmployees({data}){
         <>
         <table>
         <thead>
-          <tr>Employee #1</tr>
-          <tr>Employee #2</tr>
-          <tr>Project ID</tr>
-          <tr>Days worked</tr>
+          <tr>
+            <th>Employee #1</th>
+            <th>Employee #2</th>
+            <th>Project ID</th>
+            <th>Days worked</th>
+          </tr>
         </thead>
         <tbody>
-        {data.map(a => <li key={a.id + a.projectId}> 
-          <tr>{a.id}</tr>
-          <tr>{a.projectId}</tr>
-          <tr>{dateDiffInDays(a.dateFrom, a.dateTo)}</tr>
-        </li>)}
+        {common !== undefined ?? common.map(a => <tr key={a.id + a.projectId}> 
+          <td>{a.projectId}</td>
+          <td>{dateDiffInDays(a.dateFrom, a.dateTo)}</td>
+        </tr>)}
         </tbody>
       </table>
 
