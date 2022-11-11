@@ -16,20 +16,20 @@ export default function EmployeesPage(){
     const csvFileToArray = string => {
       const csvRows = string.split("\n");
   
-      const array = csvRows.map(i => {
-        const values = i.split(",");
+      const data = csvRows.map(row => {
+        const [employeeId, projectId, dateFromInput, dateToInput] = row.split(",");
 
-        const employeeId = values[0];
-        const projetId = values[1];
-        const dateFrom = Date.parse(values[2].trim());
-        const dateTo = values[3].trim() === 'NULL' ? Date.now() : Date.parse(values[3].trim()); 
+        const [dateFromYear, dateFromMonth, dateFromDay] = dateFromInput.split('-');
+        const dateFrom = new Date(dateFromYear, dateFromMonth, dateFromDay);
 
-        let employee = new Employee(employeeId, projetId, dateFrom, dateTo);
+        const dateTo = dateToInput === 'NULL' ? new Date() : new Date(dateToInput.trim()); 
+
+        let employee = new Employee(employeeId, projectId, dateFrom, dateTo);
         
         return employee;
       });
   
-      setUserData(array);
+      setUserData(data);
     };
   
     const handleOnSubmit = (e) => {
@@ -37,8 +37,8 @@ export default function EmployeesPage(){
   
       if (file) {
         fileReader.onload = function (event) {
-          const text = event.target.result;
-          csvFileToArray(text);
+          const result = event.target.result;
+          csvFileToArray(result);
         };
   
         fileReader.readAsText(file);
@@ -67,7 +67,7 @@ export default function EmployeesPage(){
   
         <br />
 
-        {userData !== null ? <GetCommonEmployees data={userData}/> : <div/>}
+        {userData.length !== 0 ? <GetCommonEmployees data={userData}/> : <div/>}
       </div>
     );
 }
