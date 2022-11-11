@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import GetCommonEmployees from './CommonEmployees';
+import Employee from './Employee'
 
 
 export default function EmployeesPage(){
@@ -6,7 +8,7 @@ export default function EmployeesPage(){
     const [userData, setUserData] = useState([]);
   
     const fileReader = new FileReader();
-  
+
     const handleOnChange = (e) => {
       setFile(e.target.files[0]);
     };
@@ -16,10 +18,18 @@ export default function EmployeesPage(){
   
       const array = csvRows.map(i => {
         const values = i.split(",");
-        return values;
+
+        const employeeId = values[0];
+        const projetId = values[1];
+        const dateFrom = Date.parse(values[2].trim());
+        const dateTo = values[3].trim() === 'NULL' ? Date.now() : Date.parse(values[3].trim()); 
+
+        let employee = new Employee(employeeId, projetId, dateFrom, dateTo);
+        
+        return employee;
       });
   
-      setUserData(userData);
+      setUserData(array);
     };
   
     const handleOnSubmit = (e) => {
@@ -56,20 +66,8 @@ export default function EmployeesPage(){
         </form>
   
         <br />
-  
-        {userData}
-        <table>
-  
-          <tbody>
-            {userData.map((item) => (
-              <tr key={item.id}>
-                {Object.values(item).map((val) => (
-                  <td>{val}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+        {userData !== null ? <GetCommonEmployees data={userData}/> : <div/>}
       </div>
     );
 }

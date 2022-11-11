@@ -1,5 +1,5 @@
-import './App.css';
-import EmployeesPage from './Employees';
+import './styles/App.css';
+import EmployeesPage from './EmployeePage';
 
 function App() {
   return (
