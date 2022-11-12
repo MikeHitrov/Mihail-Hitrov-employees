@@ -6,6 +6,7 @@ import "./styles/EmployeePage.css";
 export default function EmployeesPage() {
   const [file, setFile] = useState();
   const [userData, setUserData] = useState([]);
+  const parser = require("any-date-parser");
 
   const fileReader = new FileReader();
 
@@ -20,14 +21,23 @@ export default function EmployeesPage() {
       const [employeeId, projectId, dateFromInput, dateToInput] =
         row.split(",");
 
-      const [dateFromYear, dateFromMonth, dateFromDay] =
-        dateFromInput.split("-");
-      const dateFrom = new Date(dateFromYear, dateFromMonth, dateFromDay);
+      const parsedDateFromData = parser.attempt(dateFromInput.trim());
+      const dateFrom = new Date(
+        parsedDateFromData.year,
+        parsedDateFromData.month,
+        parsedDateFromData.day
+      );
 
-      const dateTo =
-        dateToInput.trim() === "NULL"
-          ? new Date()
-          : new Date(dateToInput.trim());
+      let dateTo = new Date();
+
+      if (dateToInput.trim() !== "NULL") {
+        const parsedDateToData = parser.attempt(dateToInput.trim());
+        dateTo = new Date(
+          parsedDateToData.year,
+          parsedDateToData.month,
+          parsedDateToData.day
+        );
+      }
 
       let employee = new Employee(employeeId, projectId, dateFrom, dateTo);
 
@@ -54,7 +64,7 @@ export default function EmployeesPage() {
     <div style={{ textAlign: "center" }}>
       <h1>Common employees app</h1>
       <form>
-        <div class="file-input">
+        <div className="file-input">
           <input
             type={"file"}
             id={"csvFileInput"}
@@ -62,7 +72,7 @@ export default function EmployeesPage() {
             className={"file"}
             onChange={handleOnChange}
           />
-          <label for="csvFileInput">
+          <label htmlFor="csvFileInput">
             {file !== undefined ? file.name : "Select file"}
           </label>
         </div>
