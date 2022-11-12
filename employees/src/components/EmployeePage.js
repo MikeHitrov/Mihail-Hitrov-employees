@@ -63,7 +63,6 @@ export default function EmployeesPage() {
             onChange={handleOnChange}
           />
           <label for="csvFileInput">
-            {" "}
             {file !== undefined ? file.name : "Select file"}
           </label>
         </div>
