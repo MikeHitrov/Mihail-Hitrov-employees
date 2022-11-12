@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pair of employees who have worked together
+## You can edit the CSV file to your preferance.
 
 ## Available Scripts
 
