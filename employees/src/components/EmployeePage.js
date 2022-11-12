@@ -22,7 +22,7 @@ export default function EmployeesPage(){
         const [dateFromYear, dateFromMonth, dateFromDay] = dateFromInput.split('-');
         const dateFrom = new Date(dateFromYear, dateFromMonth, dateFromDay);
 
-        const dateTo = dateToInput === 'NULL' ? new Date() : new Date(dateToInput.trim()); 
+        const dateTo = dateToInput.trim() === 'NULL' ? new Date() : new Date(dateToInput.trim()); 
 
         let employee = new Employee(employeeId, projectId, dateFrom, dateTo);
         
