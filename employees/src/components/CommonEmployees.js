@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './styles/CommonEmployees.css';
 
 export default function GetCommonEmployees({ data }) {
   const [common, setCommon] = useState([]);
