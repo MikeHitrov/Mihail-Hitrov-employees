@@ -13,12 +13,12 @@ export default function GetCommonEmployees({ data }) {
     if (
       !common.some(
         (commonItem) =>
-          ((commonItem.firstEmployeeId == a.id &&
-            commonItem.secondEmployeeId == b.id) ||
-            (commonItem.firstEmployeeId == b.id &&
-              commonItem.secondEmployeeId == a.id)) &&
-          commonItem.projectId == a.projectId &&
-          commonItem.projectId == b.projectId
+          ((commonItem.firstEmployeeId === a.id &&
+            commonItem.secondEmployeeId === b.id) ||
+            (commonItem.firstEmployeeId === b.id &&
+              commonItem.secondEmployeeId === a.id)) &&
+          commonItem.projectId === a.projectId &&
+          commonItem.projectId === b.projectId
       )
     ) {
       if (a.dateFrom <= b.dateFrom) {
@@ -109,32 +109,32 @@ export default function GetCommonEmployees({ data }) {
     return 0;
   }
 
-  console.log(common);
-
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Employee #1</th>
-          <th>Employee #2</th>
-          <th>Project ID</th>
-          <th>Days worked</th>
-        </tr>
-      </thead>
-      <tbody>
-        {common.length > 0 ? (
-          common.map((a) => (
-            <tr key={a.firstEmployeeId + a.secondEmployeeId}>
-              <td>{a.firstEmployeeId}</td>
-              <td>{a.secondEmployeeId}</td>
-              <td>{a.projectId}</td>
-              <td>{a.days}</td>
+    <>
+      {common.length !== 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Employee #1</th>
+              <th>Employee #2</th>
+              <th>Project ID</th>
+              <th>Days worked</th>
             </tr>
-          ))
-        ) : (
-          <></>
-        )}
-      </tbody>
-    </table>
+          </thead>
+          <tbody>
+            {common.map((a) => (
+              <tr key={a.firstEmployeeId + a.secondEmployeeId}>
+                <td>{a.firstEmployeeId}</td>
+                <td>{a.secondEmployeeId}</td>
+                <td>{a.projectId}</td>
+                <td>{a.days}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div>Please click the button once more to display the results.</div>
+      )}
+    </>
   );
 }

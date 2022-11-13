@@ -82,13 +82,17 @@ export default function EmployeesPage() {
             handleOnSubmit(e);
           }}
         >
-          Import Data
+          {userData.length !== 0 ? "Display results" : "Import Data"}
         </button>
       </form>
 
       <br />
 
-      {userData.length !== 0 ? <GetCommonEmployees data={userData} /> : <div />}
+      {userData.length !== 0 ? (
+        <GetCommonEmployees data={userData} />
+      ) : (
+        <div>Please upload a file to read the input data.</div>
+      )}
     </div>
   );
 }
